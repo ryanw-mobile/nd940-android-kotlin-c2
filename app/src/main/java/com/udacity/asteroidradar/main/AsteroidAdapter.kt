@@ -15,7 +15,7 @@ import com.udacity.asteroidradar.domain.Asteroid
 class AsteroidAdapter(val clickListener: AsteroidClickListener) :
     RecyclerView.Adapter<AsteroidViewHolder>() {
 
-    var Asteroids: List<Asteroid> = emptyList()
+    var asteroids: List<Asteroid> = emptyList()
         set(value) {
             field = value
             // This is not a very good way to refresh RecyclerView.
@@ -33,12 +33,12 @@ class AsteroidAdapter(val clickListener: AsteroidClickListener) :
         return AsteroidViewHolder(withDataBinding)
     }
 
-    override fun getItemCount() = Asteroids.size
+    override fun getItemCount() = asteroids.size
 
     override fun onBindViewHolder(holder: AsteroidViewHolder, position: Int) {
         holder.viewDataBinding.also {
             // These correspond to the data variables we defined in the XML
-            it.asteroid = Asteroids[position]
+            it.asteroid = asteroids[position]
             it.asteroidClickListener = clickListener
         }
     }
