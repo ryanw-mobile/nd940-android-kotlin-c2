@@ -27,7 +27,10 @@ class AsteroidApplication : Application() {
     /**
      * Project requirement:
      * Be able to cache the data of the asteroid by using a worker, so it downloads and saves
-     * today's asteroids in background once a day when the device is charging and wifi is enabled.
+     * asteroids in background once a day when the device is charging and wifi is enabled.
+     *
+     * On the project instructions it says it should download today's asteroids, but on the rubrics
+     * it says 7 days. So I have implemented 7 days.
      */
     private fun setupRecurringWork() {
         val constraints = Constraints.Builder()
