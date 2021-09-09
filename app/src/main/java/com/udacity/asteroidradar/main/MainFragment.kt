@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 import com.udacity.asteroidradar.domain.Asteroid
@@ -32,7 +33,8 @@ class MainFragment : Fragment() {
         binding.viewModel = viewModel
 
         recyclerViewAdapter = AsteroidAdapter(AsteroidClickListener {
-            // Use Navigation to navigate to the detail screen
+            // Use Navigation to navigate to the detail screen, with the selected Asteroid as safe-arg
+            findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
         })
         binding.asteroidRecycler.adapter = recyclerViewAdapter
 
