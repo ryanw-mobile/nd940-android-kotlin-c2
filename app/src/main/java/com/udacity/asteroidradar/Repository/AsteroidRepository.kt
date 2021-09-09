@@ -2,6 +2,7 @@ package com.udacity.asteroidradar.Repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import com.udacity.asteroidradar.ApiKey
 import com.udacity.asteroidradar.database.AsteroidsDatabase
 import com.udacity.asteroidradar.database.asDomainModel
 import com.udacity.asteroidradar.domain.Asteroid
@@ -21,9 +22,14 @@ class AsteroidRepository(private val database: AsteroidsDatabase) {
     suspend fun refreshAsteroids() {
         // TODO: this network call requires query string. This is a hardcode one for dev. use
         val queryString = mutableMapOf<String, String>()
-        queryString.put("start_date", "2015-09-07")
-        queryString.put("end_date", "2015-09-08")
-        queryString.put("api_key", "DEMO_KEY")
+        queryString["start_date"] = "2015-09-07"
+        queryString["end_date"] = "2015-09-08"
+        // Note to reviewer: You have to create an object class like this:
+        // package com.udacity.asteroidradar
+        //  object ApiKey {
+        //    const val NEO_WS = "your_key_here"
+        // }
+        queryString["api_key"] = ApiKey.NEO_WS
 
         // force the Kotlin coroutine to switch to the IO dispatcher.
         withContext(Dispatchers.IO) {
