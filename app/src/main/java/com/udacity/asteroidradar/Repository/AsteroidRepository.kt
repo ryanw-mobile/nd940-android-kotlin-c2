@@ -3,13 +3,16 @@ package com.udacity.asteroidradar.Repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.ApiKey
+import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidsDatabase
 import com.udacity.asteroidradar.database.asDomainModel
 import com.udacity.asteroidradar.domain.Asteroid
-import com.udacity.asteroidradar.network.Network
+import com.udacity.asteroidradar.network.NetworkAsteroidContainer
+import com.udacity.asteroidradar.network.NetworkScalars
 import com.udacity.asteroidradar.network.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 
 class AsteroidRepository(private val database: AsteroidsDatabase) {
@@ -19,23 +22,26 @@ class AsteroidRepository(private val database: AsteroidsDatabase) {
             it.asDomainModel()
         }
 
-    suspend fun refreshAsteroids() {
-        // TODO: this network call requires query string. This is a hardcode one for dev. use
-        val queryString = mutableMapOf<String, String>()
-        queryString["start_date"] = "2015-09-07"
-        queryString["end_date"] = "2015-09-08"
-        // Note to reviewer: You have to create an object class like this:
-        // package com.udacity.asteroidradar
-        //  object ApiKey {
-        //    const val NEO_WS = "your_key_here"
-        // }
-        queryString["api_key"] = ApiKey.NEO_WS
+    suspend fun refreshAsteroidsList() {
+        // TODO: this network call requires query string. This is a hardcode one for dev use
+        val startDate = "2015-09-07"
+        val endDate = "2015-09-08"
+        val apiKey = ApiKey.NEO_WS
 
         // force the Kotlin coroutine to switch to the IO dispatcher.
         withContext(Dispatchers.IO) {
-            val asteroidList = Network.neoWs.getAsteroidListAsync(queryString).await()
-            // Note the asterisk * is the spread operator. It allows you to pass in an array to a function that expects varargs.
-            database.asteroidDao.insertAll(*asteroidList.asDatabaseModel())
+            val responseText =
+                NetworkScalars.neoWs.getAsteroidList(startDate, endDate, apiKey).body()
+
+            // If the response is empty, we skip processing the data
+            if (!responseText.isNullOrEmpty()) {
+                val asteroidList = NetworkAsteroidContainer(
+                    parseAsteroidsJsonResult(JSONObject(responseText))
+                )
+
+                // Note the asterisk * is the spread operator. It allows you to pass in an array to a function that expects varargs.
+                database.asteroidDao.insertAll(*asteroidList.asDatabaseModel())
+            }
         }
     }
 }

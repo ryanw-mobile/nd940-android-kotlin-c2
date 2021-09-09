@@ -1,8 +1,8 @@
 package com.udacity.asteroidradar.network
 
-import kotlinx.coroutines.Deferred
+import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.QueryMap
+import retrofit2.http.Query
 
 /**
  * Retrofit service to retrive a list of Asteroids based on their cloest approach date to Earth
@@ -13,6 +13,9 @@ import retrofit2.http.QueryMap
  */
 interface NeoWsService {
     @GET("/neo/rest/v1/feed")
-    fun getAsteroidListAsync(@QueryMap options: Map<String, String>):
-            Deferred<NetworkAsteroidContainer>
+    suspend fun getAsteroidList(
+        @Query("start_date") startDate: String,
+        @Query("end_date") endDate: String,
+        @Query("api_key") apiKey: String
+    ): Response<String>
 }

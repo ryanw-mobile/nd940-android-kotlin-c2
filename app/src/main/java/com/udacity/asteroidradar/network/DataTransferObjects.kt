@@ -5,7 +5,7 @@ import com.udacity.asteroidradar.database.DatabaseAsteroid
 import com.udacity.asteroidradar.domain.Asteroid
 
 @JsonClass(generateAdapter = true)
-data class NetworkAsteroidContainer(val Asteroids: List<NetworkAsteroid>)
+data class NetworkAsteroidContainer(val Asteroids: ArrayList<NetworkAsteroid>)
 
 /**
  * Data class to store the asteroid data returned from network.

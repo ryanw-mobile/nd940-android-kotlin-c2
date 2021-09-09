@@ -15,7 +15,7 @@ class MainViewModel(application: Application) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            asteroidRepository.refreshAsteroids()
+            asteroidRepository.refreshAsteroidsList()
         }
     }
 
