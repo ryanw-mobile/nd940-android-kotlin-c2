@@ -8,6 +8,7 @@ import com.udacity.asteroidradar.Repository.AsteroidRepository
 import com.udacity.asteroidradar.api.getNextSevenDaysFormattedDates
 import com.udacity.asteroidradar.database.getDatabase
 import retrofit2.HttpException
+import timber.log.Timber
 
 class RefreshDataWorker(appContext: Context, params: WorkerParameters) :
     CoroutineWorker(appContext, params) {
@@ -15,6 +16,8 @@ class RefreshDataWorker(appContext: Context, params: WorkerParameters) :
     override suspend fun doWork(): Result {
         val database = getDatabase(applicationContext)
         val repository = AsteroidRepository(database)
+
+        Timber.d("RefreshDataWorker has been triggered")
 
         return try {
             // Retrieve an array of formatted dates for the next 7 days
