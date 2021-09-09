@@ -22,6 +22,7 @@ private val moshi = Moshi.Builder()
  */
 object Network {
     // For development purpose, an Interceptor is added
+    // TODO: Should hide this in production
     private val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
