@@ -30,7 +30,8 @@ class RefreshDataWorker(appContext: Context, params: WorkerParameters) :
             repository.refreshAsteroidsList(
                 nextSevenFormattedDates[0],
                 nextSevenFormattedDates[6],
-                ApiKey.NEO_WS
+                ApiKey.NEO_WS,
+                true
             )
             Result.success()
         } catch (e: HttpException) {

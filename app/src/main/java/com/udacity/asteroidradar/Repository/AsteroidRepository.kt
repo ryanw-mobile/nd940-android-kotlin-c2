@@ -2,7 +2,6 @@ package com.udacity.asteroidradar.Repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.udacity.asteroidradar.ApiKey
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidsDatabase
 import com.udacity.asteroidradar.database.asDomainModel
@@ -22,7 +21,12 @@ class AsteroidRepository(private val database: AsteroidsDatabase) {
             it.asDomainModel()
         }
 
-    suspend fun refreshAsteroidsList(startDate :String, endDate :String, apiKey :String) {
+    suspend fun refreshAsteroidsList(
+        startDate: String,
+        endDate: String,
+        apiKey: String,
+        deletePastAsteroids: Boolean
+    ) {
         // force the Kotlin coroutine to switch to the IO dispatcher.
         withContext(Dispatchers.IO) {
             val responseText =
@@ -36,6 +40,11 @@ class AsteroidRepository(private val database: AsteroidsDatabase) {
 
                 // Note the asterisk * is the spread operator. It allows you to pass in an array to a function that expects varargs.
                 database.asteroidDao.insertAll(*asteroidList.asDatabaseModel())
+
+                // Additional function - if true, the asteroids before the given startDate will be deleted
+                if (deletePastAsteroids) {
+                    database.asteroidDao.deletePastAsteroids(startDate)
+                }
             }
         }
     }
