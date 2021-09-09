@@ -23,6 +23,7 @@
         <TextView
             android:id="@+id/listitem_name"
             style="@style/listItemHeading"
+            android:text="@{asteroid.codename}"
             app:layout_constraintBottom_toTopOf="@+id/listitem_date"
             app:layout_constraintHorizontal_weight="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +33,7 @@
         <TextView
             android:id="@+id/listitem_date"
             style="@style/listItemBodyText"
+            android:text="@{asteroid.closeApproachDate}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/listitem_hazardous"
             app:layout_constraintHorizontal_weight="1.0"
@@ -43,6 +45,7 @@
             android:id="@+id/listitem_hazardous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:bindAsteroidStatusImage="@{asteroid.potentiallyHazardous}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
