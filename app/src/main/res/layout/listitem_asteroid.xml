@@ -45,7 +45,7 @@
             android:id="@+id/listitem_hazardous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:bindAsteroidStatusImage="@{asteroid.potentiallyHazardous}"
+            app:statusIcon="@{asteroid.potentiallyHazardous}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
