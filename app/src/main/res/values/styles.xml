@@ -15,7 +15,7 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="listItemDate" parent="TextAppearance.MaterialComponents.Body1">
+    <style name="listItemBodyText" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginEnd">167dp</item>
