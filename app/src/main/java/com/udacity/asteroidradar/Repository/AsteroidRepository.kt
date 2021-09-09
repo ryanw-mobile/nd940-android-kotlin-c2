@@ -22,12 +22,7 @@ class AsteroidRepository(private val database: AsteroidsDatabase) {
             it.asDomainModel()
         }
 
-    suspend fun refreshAsteroidsList() {
-        // TODO: this network call requires query string. This is a hardcode one for dev use
-        val startDate = "2015-09-07"
-        val endDate = "2015-09-08"
-        val apiKey = ApiKey.NEO_WS
-
+    suspend fun refreshAsteroidsList(startDate :String, endDate :String, apiKey :String) {
         // force the Kotlin coroutine to switch to the IO dispatcher.
         withContext(Dispatchers.IO) {
             val responseText =
