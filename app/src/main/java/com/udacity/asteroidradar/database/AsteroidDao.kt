@@ -9,7 +9,7 @@ private lateinit var INSTANCE: AsteroidsDatabase
 @Dao
 interface AsteroidDao {
 
-    @Query("select * from databaseasteroid")
+    @Query("select * from databaseasteroid order by closeApproachDate ASC")
     fun getAsteroids(): LiveData<List<DatabaseAsteroid>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
