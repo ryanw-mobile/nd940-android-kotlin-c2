@@ -12,7 +12,7 @@ import retrofit2.http.QueryMap
  * api_key      string      default:DEMO_KEY                    api.nasa.gov key for expanded usage
  */
 interface NeoWsService {
-    @GET("/neo/rest/vi/feed")
+    @GET("/neo/rest/v1/feed")
     fun getAsteroidListAsync(@QueryMap options: Map<String, String>):
             Deferred<NetworkAsteroidContainer>
 }

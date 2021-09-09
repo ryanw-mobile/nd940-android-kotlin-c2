@@ -23,7 +23,7 @@ class AsteroidRepository(private val database: AsteroidsDatabase) {
         val queryString = mutableMapOf<String, String>()
         queryString.put("start_date", "2015-09-07")
         queryString.put("end_date", "2015-09-08")
-        queryString.put("start_date", "DEMO_KEY")
+        queryString.put("api_key", "DEMO_KEY")
 
         // force the Kotlin coroutine to switch to the IO dispatcher.
         withContext(Dispatchers.IO) {
