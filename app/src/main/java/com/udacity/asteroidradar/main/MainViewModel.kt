@@ -1,6 +1,8 @@
 package com.udacity.asteroidradar.main
 
 import android.app.Application
+import android.media.Image
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,7 +22,7 @@ class MainViewModel(application: Application) : ViewModel() {
     private val asteroidRepository = AsteroidRepository(database)
     val asteroidList = asteroidRepository.asteroids
     private var _imageOfDayObject = MutableLiveData<ImageOfDayObject>()
-    val imageOfDayObject
+    val imageOfDayObject: LiveData<ImageOfDayObject>
         get() = _imageOfDayObject
 
     init {
