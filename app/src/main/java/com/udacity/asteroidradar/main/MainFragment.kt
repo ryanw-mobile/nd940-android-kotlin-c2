@@ -52,8 +52,8 @@ class MainFragment : Fragment() {
             }
         })
 
-        viewModel.imageOfDayObject.observe(viewLifecycleOwner, {imageOfDayObject ->
-            if ("image".equals(imageOfDayObject.media_type)) {
+        viewModel.imageOfDayObject.observe(viewLifecycleOwner, { imageOfDayObject ->
+            if ("image" == imageOfDayObject.mediaType) {
                 Picasso.get().load(imageOfDayObject.url).into(binding.activityMainImageOfTheDay)
                 binding.activityMainImageOfTheDay.contentDescription = imageOfDayObject.title
             }
