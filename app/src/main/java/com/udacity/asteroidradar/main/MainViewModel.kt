@@ -8,6 +8,8 @@ import com.udacity.asteroidradar.Repository.AsteroidRepository
 import com.udacity.asteroidradar.api.getNextSevenDaysFormattedDates
 import com.udacity.asteroidradar.database.getDatabase
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+
 
 class MainViewModel(application: Application) : ViewModel() {
 
@@ -21,13 +23,21 @@ class MainViewModel(application: Application) : ViewModel() {
             // and we request to retrieve 7 days' asteroids from the server
             val nextSevenFormattedDates = getNextSevenDaysFormattedDates()
 
-            // Note to reviewer: ApiKey.NEO_WS is not in this repository. You need to create this data object yourself
-            asteroidRepository.refreshAsteroidsList(
-                nextSevenFormattedDates[0],
-                nextSevenFormattedDates[6],
-                ApiKey.NEO_WS,
-                false
-            )
+            try {
+                // Note to reviewer: ApiKey.NEO_WS is not in this repository. You need to create this data object yourself
+                asteroidRepository.refreshAsteroidsList(
+                    nextSevenFormattedDates[0],
+                    nextSevenFormattedDates[6],
+                    ApiKey.NEO_WS,
+                    false
+                )
+            } catch (e: HttpException) {
+                // This occurs when there is no network, but can be due to other network error
+                e.printStackTrace()
+            } catch (e: java.net.UnknownHostException) {
+                // This occurs when there is no network, but can be due to other network error
+                e.printStackTrace()
+            }
         }
     }
 }

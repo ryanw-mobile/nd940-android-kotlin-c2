@@ -36,6 +36,9 @@ class RefreshDataWorker(appContext: Context, params: WorkerParameters) :
             Result.success()
         } catch (e: HttpException) {
             Result.retry()
+        } catch (e: java.net.UnknownHostException) {
+            // This occurs when there is no network, but can be due to other network error
+            Result.retry()
         }
     }
 
