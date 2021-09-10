@@ -10,13 +10,19 @@ private lateinit var INSTANCE: AsteroidsDatabase
 interface AsteroidDao {
 
     @Query("select * from databaseasteroid order by closeApproachDate ASC")
-    fun getAsteroids(): LiveData<List<DatabaseAsteroid>>
+    fun getAll(): LiveData<List<DatabaseAsteroid>>
+
+    @Query("select * from databaseasteroid where closeApproachDate == :givenDate LIMIT 1")
+    fun getAsteroidsByDate(givenDate: String): LiveData<List<DatabaseAsteroid>>
+
+    @Query("select * from databaseasteroid where closeApproachDate >= :startDate AND closeApproachDate <= :endDate order by closeApproachDate ASC LIMIT 1")
+    fun getAsteroidsByRange(startDate: String, endDate: String): LiveData<List<DatabaseAsteroid>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg asteroids: DatabaseAsteroid)
 
     @Query("delete from databaseasteroid where closeApproachDate < :givenDate")
-    fun deletePastAsteroids(givenDate :String)
+    fun deletePastAsteroids(givenDate: String)
 }
 
 @Database(entities = [DatabaseAsteroid::class], version = 1)

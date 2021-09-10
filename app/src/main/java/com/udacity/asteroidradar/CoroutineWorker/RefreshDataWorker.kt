@@ -7,6 +7,7 @@ import com.udacity.asteroidradar.ApiKey
 import com.udacity.asteroidradar.Repository.AsteroidRepository
 import com.udacity.asteroidradar.api.getNextSevenDaysFormattedDates
 import com.udacity.asteroidradar.database.getDatabase
+import com.udacity.asteroidradar.main.ListFilter
 import retrofit2.HttpException
 import timber.log.Timber
 
