@@ -29,7 +29,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentMainBinding.inflate(inflater)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.viewModel = viewModel
 
