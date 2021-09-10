@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
-import com.udacity.asteroidradar.domain.Asteroid
 
 class MainFragment : Fragment() {
 
     private var recyclerViewAdapter: AsteroidAdapter? = null
+    private lateinit var binding: FragmentMainBinding
 
     // The ViewModel requires Application object to initialize. Needs a ViewModelFactory to do it.
     private val viewModel: MainViewModel by lazy {
@@ -28,7 +28,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentMainBinding.inflate(inflater)
+        binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.viewModel = viewModel
@@ -46,9 +46,16 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.asteroidList.observe(viewLifecycleOwner, Observer<List<Asteroid>> { asteroids ->
+        viewModel.asteroidList.observe(viewLifecycleOwner, { asteroids ->
             asteroids?.apply {
                 recyclerViewAdapter?.asteroids = asteroids
+            }
+        })
+
+        viewModel.imageOfDayObject.observe(viewLifecycleOwner, {imageOfDayObject ->
+            if ("image".equals(imageOfDayObject.media_type)) {
+                Picasso.get().load(imageOfDayObject.url).into(binding.activityMainImageOfTheDay)
+                binding.activityMainImageOfTheDay.contentDescription = imageOfDayObject.title
             }
         })
     }

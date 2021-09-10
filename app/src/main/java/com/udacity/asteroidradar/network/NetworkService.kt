@@ -28,7 +28,7 @@ object NetworkMoshi {
         .client(client)
         .build()
 
-    val neoWs = retrofit.create(NeoWsService::class.java)
+    val apodWs = retrofit.create(PicOfDayService::class.java)
 }
 
 object NetworkScalars {
